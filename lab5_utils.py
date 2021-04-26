@@ -93,13 +93,13 @@ def plot_error(f, mode, s, t, show=True, a=-1, b=1):
     # print(mode)
     for i in range(s, t):
         # print(i, "------>", float(error(f, i, mode)))
-        points.append((i, error(f, i, mode, a, b)))
+        points.append((i + 1, error(f, i, mode, a, b)))
 
     plt.plot([x[0] for x in points], [x[1] for x in points], label=mode)
     plt.scatter([x[0] for x in points], [x[1] for x in points], s=12)
     if show:
         plt.title("relative errors for " + str(mode))
-        plt.xlabel("n + 1")
+        plt.xlabel("evaluation points")
         plt.ylabel("relative error")
         plt.grid()
         plt.legend()
@@ -112,7 +112,7 @@ def plot_errors(f, s, t, show_one_by_one=False, a=-1, b=1):
 
     if not show_one_by_one:
         plt.title("relative errors for all modes")
-        plt.xlabel("n + 1")
+        plt.xlabel("evaluation points")
         plt.ylabel("relative error")
         plt.grid()
         plt.legend()
@@ -141,18 +141,19 @@ def print_integrations(f, s, t, a=-1, b=1):
 def plot_integration(f, mode, s, t, show=True, a=-1, b=1):
     points = []
     for i in range(s, t):
-        points.append((i, my_integrate(f, i, mode, a, b)))
+
+        points.append((i + 1, my_integrate(f, i, mode, a, b)))
     plt.plot([p[0] for p in points], [p[1] for p in points], label=mode)
     plt.scatter([p[0] for p in points], [p[1] for p in points], s=12)
 
 
     if show:
         true_val = integrate(f, (x, a, b))
-        plt.plot((s, t - 1), [true_val] * 2, label='true_val')
+        plt.plot((s + 1, t), [true_val] * 2, label='true value')
         plt.grid()
         plt.legend()
         plt.title("integration results for " + str(mode))
-        plt.xlabel("n + 1")
+        plt.xlabel("evaluation points")
         plt.ylabel("integration result")
         plt.show()
 
@@ -162,10 +163,10 @@ def plot_integrations(f, s, t, show_one_by_one=False, a=-1, b=1):
         plot_integration(f, mode, s, t, show_one_by_one, a, b)
     if not show_one_by_one:
         true_val = integrate(f, (x, a, b))
-        plt.plot((s, t - 1), [true_val] * 2, label='true_val')
+        plt.plot((s + 1, t), [true_val] * 2, label='true value')
         # plt.scatter((s, t-1), [true_val] * 2 , label = 'true_val')
         plt.title("integration results for all modes")
-        plt.xlabel("n + 1")
+        plt.xlabel("evaluation points")
         plt.ylabel("integration result")
         plt.grid()
         plt.legend()
